@@ -8,3 +8,8 @@ SELECT S.STUDENT_ID,S.STUDENT_NAME,U.SUBJECT_NAME --,NVL(COUNT(S.STUDENT_ID),0) 
  AND E.SUBJECT_NAME=C.SUBJECT_NAME
  GROUP BY C.STUDENT_ID,C.STUDENT_NAME,C.SUBJECT_NAME,E.STUDENT_ID
  ORDER BY C.STUDENT_ID,C.SUBJECT_NAME;
+
+---OPTIMISED
+select s.student_id, s.student_name, ss.subject_name, (select count(*) from examinations e where ss.subject_name = e.subject_name
+  and s.student_id = e.student_id) attended_exams from students s, subjects ss
+order by 1, 3
